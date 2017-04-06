@@ -1,0 +1,6 @@
+shift-A    Append text to end of current line
+ctrl-v     allow next key to be inserter literally
+u          undo
+ctrl-R     Redo what was undone
+:240,245 w newfilename      creates a file from what is on those lines
+#above could be used with history to write a script from commands your already using for a little automation
