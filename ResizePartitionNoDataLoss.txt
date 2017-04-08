@@ -1,0 +1,20 @@
+ensure disk is unmounted
+fdisk /dev/sda
+d- delete partition
+p- verify deleted
+w- write to disk
+create new partition
+fdisk /dev/sda
+n- command to create partition
+p- primary
+2- because we already had a partition 1 a windows recovery partition that has never been removed incase we want to recover
+next you get to choose default beginning of disk and end if you wanted to resize make smaller or larger which ever
+p- verify what happend
+w- write it to disk
+fdisk /dev/sda
+a flag as bootable
+2 choose partition in which to flag as bootable
+e2fsck -f /dev/sda2 you must check file system before resizing
+resize2fs /dev/sda2 resizes the filing system for you 
+mount /dev/sda2 /mnt
+verify all your data is there
