@@ -5,7 +5,7 @@ Description=Create stars script in /home/jeff/starsplace
 
 [Service]
 Type=simple
-ExecStart=/bin/stars start
+ExecStart=/bin/stars
 [Install]
 WantedBy=graphical.target  #the install option is optionsal
 _____________________________________________________________________________________________
