@@ -1,1 +1,66 @@
-   
+Per iptables manual, there are currently 3 types of tables:
+
+FILTER – this is the default table, which contains the built in chains for:
+	INPUT  – packages destined for local sockets
+	FORWARD – packets routed through the system
+	OUTPUT – packets generated locally
+NAT – a table that is consulted when a packet tries to create a new connection. It has the following built-in:
+	PREROUTING – used for altering a packet as soon as it’s received
+	OUTPUT – used for altering locally generated packets
+	POSTROUTING – used for altering packets as they are about to go out
+MANGLE – this table is used for packet altering. Until kernel version 2.4 this table had only two chains, but they are now 5:
+	PREROUTING – for altering incoming connections
+	OUTPUT – for altering locally generated  packets
+	INPUT – for incoming packets
+	POSTROUTING – for altering packets as they are about to go out
+	FORWARD – for packets routed through the box
+
+start and stop with systemd
+ systemctl start iptables
+# systemctl stop iptables
+# systemctl restart iptables
+
+start and stop older versions sysV
+
+/etc/init.d/iptables start 
+/etc/init.d/iptables stop
+/etc/init.d/iptables restart
+
+Check all IPtables Firewall Rules
+iptables -L -n -v
+
+Block Specific IP Address in IPtables Firewall
+iptables -A INPUT -s xxx.xxx.xxx.xxx -j DROP	#note -A is to append the rule
+iptables -A INPUT -p tcp -s xxx.xxx.xxx.xxx -j DROP 	#-p to choose prtotocol tcp/udp
+
+Unblock IP Address in IPtables Firewall
+iptables -D INPUT -s xxx.xxx.xxx.xxx -j DROP 	#-D deletes the rule 
+
+Block Specific Port on IPtables Firewall
+iptables -A OUTPUT -p tcp --dport xxx -j DROP
+iptables -A INPUT -p tcp --dport xxx -j ACCEPT
+
+Allow Multiple Ports on IPtables using Multiport
+iptables -A INPUT  -p tcp -m multiport --dports 22,80,443 -j ACCEPT
+iptables -A OUTPUT -p tcp -m multiport --sports 22,80,443 -j ACCEPT
+
+
+-s address Specifies the source address of packets for a rule.
+-d address Specifies the destination address of packets for a rule.
+-sport port# Specifies the source port number for a rule.
+-dport port# Specifies the destination port number for a rule.
+-p protocol Specifies the protocol type for a rule.
+-i interface Specifies the input network interface.
+-o interface Specifies the output network interface.
+-j action Specifies the action that is taken for a rule.
+-m match Specifies a match parameter that should be used within the rule. The most common match used is state, which creates a stateful packet filtering firewall.
+-A chain Specifies the chain used.
+-L chain Lists rules for a certain chain. If no chain is given, all chains are listed.
+
+all iptables are stored in memory, if you want to store them persistently you must do the following.
+apt install iptables-persistent
+in fedora20 service iptables save
+-P policy Specifies the default policy for a certain chain type.
+-D number Deletes a rule for a chain specified by additional arguments. Rules start at number 1.
+-R number Replaces a rule for a chain specified by additional arguments. Rules start at number 1.
+-F chain Removes all rules for a certain chain. If no chain is specified, it removes all rules for all chains.
