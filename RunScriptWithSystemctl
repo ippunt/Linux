@@ -1,7 +1,7 @@
 In the directory of /etc/systemd/system create a stars.service
 
 [Unit]
-Description=Create stars script in /home/jeff/starsplace
+Description=Runs stars script which creates a file --> /home/jeff/starsplace
 
 [Service]
 Type=simple
