@@ -1,1 +1,11 @@
 In the directory of /etc/systemd/system create a stars.service
+
+[Unit]
+Description=Create stars script in /home/jeff/starsplace
+
+[Service]
+Type=simple
+ExecStart=/bin/stars start
+[Install]
+WantedBy=graphical.target  #the install option is optionsal
+_____________________________________________________________________________________________
