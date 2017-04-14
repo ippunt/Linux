@@ -1,1 +1,24 @@
- 
+ command 1>file command >file    The Standard Output of the command is sent to a file instead of to the terminal screen
+
+
+command 2>file  The Standard Error of the command is sent to a file instead of to the terminal screen.
+
+
+
+command 1>fileA 2>fileB command >fileA 2>fileB
+The Standard Output of the command is sent to fileA instead of to the terminal screen,
+ and the Standard Error of the command is sent to fileB instead of to the terminal screen
+
+command 1>file 2>&1    command >file 2>&1    command 1>&2 2>file    command >&2 2>file
+Both the Standard Output and the Standard Error are sent to the same file instead of to the terminal screen.
+
+
+command 1>>file command >>file
+The Standard Output of the command is appended to a file instead of being sent to the terminal screen.
+
+
+command 0<file command <file
+The Standard Input of a command is taken from a file.
+ie:sort 0<MixedUpFile # Prints your mixed up file by alphabetical order to screen
+sort 0<MixedUpFile > FileByAlphabeticalOrder  # now your sorted file will be outputted to the FileByAlphabeticalOrder
+Initial file is never changed due to using standard input and never putting output into it
