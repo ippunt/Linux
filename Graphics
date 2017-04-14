@@ -1,1 +1,23 @@
+x windows system
+Video hardware > X Windows > window manager > Desktop environment > graphical programs
+X windows also known as x server   
+x clients tell x windows how to draw what needs to be drawn
+x windows has been maintained by X.org as open source and info can be found at Web site www.x.org.
+
+Until recently, X Windows was governed by a separate license than the GPL, which restricted the usage of X Windows and its source code.
+ As a result, open source developers created an open source version of X Windows in the 1990s. This freely available version of X Windows
+ is used in many Linux distributions and is called XFree86 because it was originally intended for the Intel x86 platform.
  
+So X.org and xfree86 are both X windows implementations that are available for linux desktops
+
+2 most widely used desktop environments KDE and GNOME
+gnome is the default desktop environment on most linux distributions
+To learn more about GNOME, visit www.gnome.org
+
+X Windows is the component of the GUI that interfaces with the video hardware in the computer. 
+
+If you use XFree86, X Windows stores its entire configuration in the file /etc/X11/XF86Config
+
+If you use X.org, X Windows stores its configuration in the file /etc/X11/xorg.conf 
+Install graphics and run
+apt isntall xorg gnome && startx
