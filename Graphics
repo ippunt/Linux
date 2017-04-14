@@ -21,3 +21,4 @@ If you use XFree86, X Windows stores its entire configuration in the file /etc/X
 If you use X.org, X Windows stores its configuration in the file /etc/X11/xorg.conf 
 Install graphics and run
 apt isntall xorg gnome && startx
+apt install xfce4 xfce4-goodies && startx
