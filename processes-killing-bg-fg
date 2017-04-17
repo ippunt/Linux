@@ -1,0 +1,105 @@
+A program is an executible file on the hard drive that can be ran when you execute it.
+A process is a program that is running in memory and on the cpu.
+Used interchangably in the field.
+
+A process not associated with a terminal is called a daemon process.
+Typically started with system startup and you can also start them manually.
+
+Any process can start an unlimited amount of child processes.
+All processes must be started by a parent process..
+Each process can only have one parent process.
+
+Process id's are not necessarily given out in sequential order by the kernel.
+Although the first process is process id #1 it is the initialization process sysV=init systemd=init"or"systemd
+
+ps shows the processes runnning in the current shell
+ps -f full basically more info time might be all zeros it is the counted time to get process running could be less than a second
+ps -ef  lists all processes across terminals and daemons with full info
+[root@server1 ~]# ps –ef | grep bash 
+user1 2094 2008 0 14:29 pts/1 00:00:00 -bash 
+root 2159 2156 0 14:30 tty2 00:00:00 -bash 
+root 2294 2159 0 14:44 tty2 00:00:00 grep –color=auto bash 
+
+When a process has finished running is must wait for the parent process to release its PID during this time it is a zombie process
+If lots of zombie processes accumulate and is stopping more processes from running you might want to kill parent process.
+______________________________________________________________________________________________________________________________________
+
+ps -l gives even more information than full
+(S) column is the most valuable to systems administrators because it indicates what the process is currently doing. If a process is 
+not being run on the processor at the current time, you see an S (sleeping)
+T if it has stopped or is being traced by another process
+Z indicates a zombie process
+R process is currently running
+Process priorities (PRI) (0 high priority) and (127 low priority)
+nice valie (NI) can be used to affect the process prioroity measured in (-20 high priority) and (19 low priority)
+(F) is a flag and the 4 indicates root user ran the process
+(ADDR) is the memory address of the process
+(SZ) process size in memory usually same size as the executible file measured in KB
+(WCHAN) idicates what the process is waiting for while sleeping
+[root@server1 ~]# ps –l
+F S UID PID PPID C PRI NI ADDR SZ WCHAN TTY TIME CMD 
+4 S 0 2159 2156 0 80 0 - 1238 wait tty2 00:00:00 bash 
+4 R 0 2295 2159 2 80 0 - 744 - tty2 00:00:00 ps 
+No one can change PRI priority but it can be influenced by the nice value which a user with root privledges can alter
+nice –n 19 ps –l  when ever the ps -l is ran the nice value will be 19
+nice ps -l by default you get a nice of 10. You start with 0 so it decreases priority
+change nice value based on process id
+renice +15 1990 2180     both pid will be changed to +15 nice which is low priority a user can give low priority but not high
+
+
+Some options to the ps command are not prefixed by a dash character, these are referred to as Berkeley-style options
+ a option, which lists all processes across terminals, and the x option, which lists processes that do not run on a terminal
+[root@server1 ~]# ps ax | head -11      head -11 gives you top 11 lines. I didn't add them all
+PID TTY 	STAT 	TIME 	COMMAND 
+1 ? 		S 	0:01 	/usr/lib/systemd/systemd 
+2 ?		S 	0:00 	[kthreadd] 
+3 ? 		S 	0:00 	[migration/0] 4 ? S< 0:00 [ksoftirqd/0] 
+
+ps is not the only way to see all the processes on a machine. ls /proc each subdirectory is named for the processes that it contains
+information for
+
+pstree can be helpful in that it shows a process tree of all the system processes
+aside from ps the most usual way of viewing processes is the top command which shows you process based on 
+memory usage(RAM), cpu usage
+A rogue process appears at the top of the process on top
+at the top prompt you can press h to get "HELP"
+press k if you want to kill a process
+
+Killing Processes
+SIGHUP 1 Also known as the hang-up signal, it stops a process, then restarts it with the same PID. If you edit the configuration file 
+used by a running daemon, that daemon might be sent a SIGHUP to restart the process; when the daemon starts again, it reads the new 
+configuration file.
+SIGINT 2 This signal sends an interrupt signal to a process. Although this signal is one of the weakest kill signals, it works most of
+the time. When you use the Ctrl+c key combination to kill a currently running process, a SIGINT is actually being sent to the process.
+SIGQUIT 3 Also known as a core dump, the quit signal terminates a process by taking the process information in memory and saving it to 
+a file called core on the hard disk in the current working directory. You can use the Ctrl+\ key combination to send a SIGQUIT to a 
+process that is currently running.
+SIGTERM 15 The software termination signal is the most common kill signal used by programs to kill other processes. It is the default
+kill signal used by the kill command. 
+SIGKILL 9 Also known as the absolute kill signal, it forces the Linux kernel to stop executing the process by sending the process’s
+resources to a special device file called /dev/null.
+IF A PROCESS WONT DIE: kill -9 PID
+It is usually necessary to kill parent process if you are trying to kill a zombie process
+killall -9 "ProcessnamenotID" kill all works like kill except is uses process name
+  
+You can execute three main types of Linux commands: 
+• Binary programs
+• Shell scripts 
+• Shell functions 
+
+Running Processes in the background
+You can run a process with the amperand symbol & like cat & or cat& eith one works and the space is not necessary
+jobs shows you the jobs you currently have running in the background
+Killing a job, to kill a job with its job id: kill -9 %1
+fg is the foreground command and can be used to move a command to the foreground with 
+fg %1   you must call on it with the job id
+__________________________________________________________________________________
+actually getting a job to run in the background how I want it too
+make sure that your script is producing something somewhere and it doesn't inherently print to screen
+./testscript &    runs in background gives me background id
+fg %1   makes my script run in the foreground I basically can not use prompt no more
+ctrl-z stops the program and gives me control of prompt once again
+bg %1  starts the script again in the background
+the jobs command will show you most recent background process with a + and the next most recent with a -
+kill %    you dont say which job kills most recent job
+
