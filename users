@@ -30,10 +30,12 @@ userdel Geniaquaw # use the -r option to also delete the user's home directory a
 
 
 groupadd -g 100 group1 # creates group
-usermod -G group1 MaryJ # adds maryj to group, is changes unless you use a to append--> usermod -aG
+usermod -G group1 MaryJ # puts Maryj in the group1 group, unless you use a to append--> usermod -aG
 if you used -aG and you want new group to be primary group use $newgrp group1     #now default group is group1 temporary during login
 session at next login it goes back to your standard group
-newgrp sys # changes you rprimary group to system and eveerything you create belongs to system group
+newgrp sys # changes you primary group to system and eveerything you create belongs to system group
+deluser MaryJ group1  # delete MaryJ from group1
+groups MaryJ  # shows you what groups a user belongs to
 /etc/login.defs # has all the password requirements.ie warning change limitation
 /etc/default/useradd # default primary group, when to lock put after password expiration date
 /etc/skel contains files that are copied to all new users home directory when it is created
@@ -42,6 +44,6 @@ usermod -l jeff Jeffbizwaz  # changes login name for jeff to Jeffbizwaz
 usermod -L MaryJ # lock someone out no access ! at beginning of password
 usrmod -U MaryJ # to unlock someones account they can again login -
 chage to modify all of the password specific things such as when can create new password after modification
-chage -m 2 –M 50–W 7 bobg 
+chage -m 2 –M 50–W 7 bobg #change user password expiry information
 wait 2 days after password change to change it again. must change pass 50 days, warning 7 days in advance
 chsh -s /bin/false MaryJ # changes shell so that user account can not ben used
