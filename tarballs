@@ -1,0 +1,14 @@
+
+example for remote desktop
+extract- tar -zxvf rdesktop-1.8.2.tar.gz
+change directory- cd rdesktop-1.8.2 
+read README- vim README
+execute configure- ./configure 
+you can change things in the Makefile and it may be necessary for features or where you want installed- vim Makefile
+make
+make install
+cd .. 
+ rm -Rf rdesktop-1.8.2 
+rm -f rdesktop-1.8.2.tar.gz 
+which rdesktop 
+/usr/local/bin/rdesktop 
