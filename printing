@@ -1,0 +1,75 @@
+Don't forget check netcat as that is an option from a server without printing services
+Cups- Common unix printing system
+lp file1 # should print file1 with default printer
+Next, the CUPS daemon (cupsd) assigns the print job a unique print job ID and places a copy of the print job into a temporary directory
+on the filesystem called the print queue
+lp file1 ----> /var/spool/cups ------->printer1         cups and printer both need to be configured
+       spooling		       printing
+LPSTAT-
+-a Displays a list of printers that are accepting print jobs
+-d Displays the default destination printer
+-o printername Displays the print jobs in the print queue for printername only
+-p Displays a list of printers that are enabled
+-r Shows whether the CUPS daemon (scheduler) is running
+-t Shows all information about printers and their print jobs
+
+You can manipulate the status of a printer using either the cupsaccept, cupsreject, cupsenable, or cupsdisable command followed by the
+printer name
+cupsdisable -r "Changing toner cartridge" printer1  # to give a reasoning for future reference 
+ lp -d printer1 /etc/inittab   # -d lets you choose destination printer
+ lp -d printer1 /etc/hosts /etc/issue # multiple files if you choose
+cancel printer1-1 printer1-2 # would cancel both of these print jobs
+switches /options  to use with lp
+-d 	printername Specifies the name of printer to send the print job.
+-i 	print job ID Specifies a certain print job ID to modify.
+-n 	number Prints a certain number of copies.
+-m 	Mails you confirmation of print job completion.
+-o 	option Specifies certain printing options. Common printing options include the following: cpi=number—Sets the characters per inch 
+to number. landscape—Prints in landscape orientation. number-up=number—Prints number pages on a single page, where number is 1, 2, or 4.
+sides=string—Sets double-sided printing, where string is either ‘two-sided-short-edge’ or ‘two-sided-long-edge’.
+-q 	priority Specifies a print job priority from 1 (low priority) to 100 (high priority). By default, all print jobs have a priority of
+50.
+
+ who | lp -d printer1 #The lp command accepts information from Standard Input, script into a print job
+
+switches /options to use with lpstat
+-a 	Displays a list of printers that are accepting print jobs
+-d 	Displays the default destination printer
+-o	 printername Displays the print jobs in the print queue for printername only
+-p 	Displays a list of printers that are enabled
+-r 	Shows whether the CUPS daemon (scheduler) is running
+-t	 Shows all information about printers and their print jobs
+
+configuration file for cups
+/etc/cups/cupsd.conf #configuration file for cups daemon
+/etc/cups/printers.conf #configuration for each individual printer
+# cups will automatically detect and create individual printer name based on manufacturing information for each printer that is not
+automatically detected. You must create the data.
+The most comprehensive way to create and manage CUPS printers is by using the CUPS Web administration tool, which gives Linux 
+administrators the ability to create and manage all printers settings
+You can access the CUPS Web administration tool using a Web browser on TCP port 631 by navigating to http://servername:631,
+
+Although CUPS is the preferred printing system for Linux computers today, many older Linux computers use the traditional Line Printer
+Daemon (LPD) printing system
+ lpr command is used to print documents to the print queue much like the lp command
+ lpc command can be used to view the status of printers
+lpq command can be used to view print jobs in the print queue
+lprm command can be used to remove print jobs, much like the cancel command
+
+Networked printers
+ By default, the CUPS daemon detects locally connected and network-shared printers and automatically adds an entry for them in the 
+ /etc/cups/printers.conf file using a name based on the printer model number (e.g., HP Laserjet 6M)
+You can provide a series of options to the lpadmin command discussed earlier to configure a printer on the system
+^^^ using the config files manually may cause problems
+
+manipulate the status of a printer using either the cupsaccept, cupsreject, cupsenable, orcupsdisable command followed by the printer
+name
+accept or rejects refers to spool weather it can accept spool or not enable and disable refers to printing spool weather daemon will
+automatically print or not
+[root@server1 ~]# cupsaccept printer1 
+[root@server1 ~]# cupsdisable printer1 
+
+
+You can restrict access to certain printers by using the lpadmin command. For example, to deny all users other than root and
+user1 from printing to the printer1 printer created earlier, you can use the following command:
+lpadmin –u allow:root,user1 –u deny:all –d printer1 
