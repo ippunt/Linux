@@ -1,0 +1,5 @@
+
+md5sum programfile
+sha1sum programfile
+sha256sum programfile
+sha512sum programfile
