@@ -47,3 +47,25 @@ chage to modify all of the password specific things such as when can create new 
 chage -m 2 –M 50–W 7 bobg #change user password expiry information
 wait 2 days after password change to change it again. must change pass 50 days, warning 7 days in advance
 chsh -s /bin/false MaryJ # changes shell so that user account can not ben used
+_________________________________________________________________________________________________________________________
+Set Access Control List
+setfacl # for special permissions- what if one person in a different group needs access to a file that belongs to another group
+granting an additional user read access
+setfacl -m u:lisa:r file
+
+ Revoking  write  access  from all groups and all named users (using the
+  effective rights mask)
+  setfacl -m m::rx file
+
+Removing a named group entry from a file’s ACL
+setfacl -x g:staff file
+
+Copying the ACL of one file to another
+getfacl file1 | setfacl --set-file=- file2
+
+Copying the access ACL into the Default ACL
+getfacl --access dir | setfacl -d -M- dir
+
+-m modify      -x remove
+
+-b, --remove-all 	Remove all extended ACL entries. The base ACL entries of the owner, group and others are retained.
