@@ -14,9 +14,12 @@ options or switches for useradd
 -d	 homedirectory Specifies the absolute pathname to the user’s home directory.
 -e 	expirydate Specifies a date to disable the account from logging in.
 -f 	days Specifies the number of days until a user account with an expired password is disabled.
--g 	group Specifies the primary group for the user account. By default in Fedora Linux, a group is created with the same name as the user and made the primary group for that user.
+-g 	group Specifies the primary group for the user account. By default in Fedora Linux, a group is created with the same name as the
+user and made the primary group for that user.
 -G 	group1, group2,etc. Specifies all other group memberships for the user account.
--m 	Specifies that a home directory should be created for the user account. By default in Fedora Linux, home directories are created for all users via an entry in the /etc/login.defs file. However, in many other Linux distributions, a home directory is not created unless this option is specified.
+-m 	Specifies that a home directory should be created for the user account. By default in Fedora Linux, home directories are created
+for all users via an entry in the /etc/login.defs file. However, in many other Linux distributions, a home directory is not created
+unless this option is specified.
 -k 	directory Specifies the skeleton directory used when copying files to a new home directory.
 -s 	shell Specifies the absolute pathname to the shell used for the user account.
 -u 	UID Specifies the UID of the user account.
@@ -28,7 +31,8 @@ userdel Geniaquaw # use the -r option to also delete the user's home directory a
 
 groupadd -g 100 group1 # creates group
 usermod -G group1 MaryJ # adds maryj to group, is changes unless you use a to append--> usermod -aG
-if you used -aG and you want new group to be primary group use $newgrp group1      #now default group is group1 temporary during login session at next login it goes back to your standard group
+if you used -aG and you want new group to be primary group use $newgrp group1     #now default group is group1 temporary during login
+session at next login it goes back to your standard group
 newgrp sys # changes you rprimary group to system and eveerything you create belongs to system group
 /etc/login.defs # has all the password requirements.ie warning change limitation
 /etc/default/useradd # default primary group, when to lock put after password expiration date
