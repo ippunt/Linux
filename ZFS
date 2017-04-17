@@ -1,0 +1,28 @@
+If you need this mounted at boot if there is a power outage or any other kind of issue you need s startup script.
+It is not controlled by the /etc/fstab
+zfs mount datastore1 datastore2 datastore3 datastore4
+
+zpool create datastorage1 /dev/sdb    # creates a pool with simply one disk you can find datastore1 in root directory
+# use the mount command to verify it worked
+
+zpool list # lists all of your zetabyte pools
+
+zpool create datastorage2 /dev/sdc /dev/sdd # a spanned volume no raid both disks mount to one point
+ # oracle says its striped but oraacle is wrong and the book is correct through trial and error test ubuntu 16.04.01 
+theres is most likely proprietary and not open source.
+
+zpool create datastorage3 mirror /dev/sde /dev/sdf  # create a mirrored mount point half the storage w/ redundancy
+
+ zpool status datastorage3  #status of specific pool
+# if you find that you have a bad disk lets say it is the /dev/sde
+
+ zpool detach datastorage3 /dev/sde # remove it from the pool remove the disk replace with a good disk
+zpool attach datastorage3 /dev/sdf /dev/sde 
+ 
+zpool create datastorage4 raidz /dev/sdg /dev/sdh /dev/sdi # raidz is raid 5
+
+ zfs create datastorage4/research # create directory in your pool with the zfs command
+
+ zfs list # shows you your datastorage pools and subsystems (directory structure)
+
+ zfs get all datastorage4/research | less # lists specific configuration parameters that you can modify
