@@ -1,1 +1,43 @@
-   
+   The first file, /etc/login.defs, contains parameters that set the default location for e-mail, password expiration information
+, minimum password length, and the range of UIDs and GIDs available for use
+In addition, it determines whether home directories will be automatically made during user creation,
+ as well as the password hash algorithm used to store passwords within /etc/shadow. 
+
+The second file, /etc/default/useradd, contains information regarding the default primary group,
+ the location of home directorie the default number of days to disable accounts with expired passwords,
+ the date to disable user accounts, the shell used, and the skeleton directory used
+ 
+The skeleton directory, which is /etc/skel on most Linux systems, contains files that are copied to all new users’ home directories
+
+options or switches for useradd
+-c 	 “description” Adds a description for the user to the GECOS field of /etc/passwd.
+-d	 homedirectory Specifies the absolute pathname to the user’s home directory.
+-e 	expirydate Specifies a date to disable the account from logging in.
+-f 	days Specifies the number of days until a user account with an expired password is disabled.
+-g 	group Specifies the primary group for the user account. By default in Fedora Linux, a group is created with the same name as the user and made the primary group for that user.
+-G 	group1, group2,etc. Specifies all other group memberships for the user account.
+-m 	Specifies that a home directory should be created for the user account. By default in Fedora Linux, home directories are created for all users via an entry in the /etc/login.defs file. However, in many other Linux distributions, a home directory is not created unless this option is specified.
+-k 	directory Specifies the skeleton directory used when copying files to a new home directory.
+-s 	shell Specifies the absolute pathname to the shell used for the user account.
+-u 	UID Specifies the UID of the user account.
+
+
+useradd Geniaquaw
+userdel Geniaquaw # use the -r option to also delete the user's home directory and its contents
+
+
+groupadd -g 100 group1 # creates group
+usermod -G group1 MaryJ # adds maryj to group, is changes unless you use a to append--> usermod -aG
+if you used -aG and you want new group to be primary group use $newgrp group1      #now default group is group1 temporary during login session at next login it goes back to your standard group
+newgrp sys # changes you rprimary group to system and eveerything you create belongs to system group
+/etc/login.defs # has all the password requirements.ie warning change limitation
+/etc/default/useradd # default primary group, when to lock put after password expiration date
+/etc/skel contains files that are copied to all new users home directory when it is created
+usermod to modify user login name and many other things
+usermod -l jeff Jeffbizwaz  # changes login name for jeff to Jeffbizwaz
+usermod -L MaryJ # lock someone out no access ! at beginning of password
+usrmod -U MaryJ # to unlock someones account they can again login -
+chage to modify all of the password specific things such as when can create new password after modification
+chage -m 2 –M 50–W 7 bobg 
+wait 2 days after password change to change it again. must change pass 50 days, warning 7 days in advance
+chsh -s /bin/false MaryJ # changes shell so that user account can not ben used
