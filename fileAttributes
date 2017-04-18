@@ -1,0 +1,3 @@
+lsattr file1 # lists the file attribute
+chattr +i file1 # adds the immutable attribute to the file not even root can alter it until this is removed
+chattr -i file1 # removes the immutable attribute
