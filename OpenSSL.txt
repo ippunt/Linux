@@ -9,6 +9,7 @@ https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309
 
 Generate Private key: 
 openssl genrsa -des3 -out hostname.LAN.LOCAL.key 2048 
+No Encrypted Private key: openssl genrsa -out hostname.LAN.LOCAL.key 4096
 
 Gen public key in the CSR: 
 openssl req -new -key hostname.LAN.LOCAL.key -config /MyDirStruct/config.cnf -extensions v3_req -out hostname.LAN.LOCAL.csr  
