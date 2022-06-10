@@ -41,9 +41,9 @@ C = US
 
 ST = CA 
 
-L = Merced 
+L = MyCity 
 
-O = MID 
+O = MyOrg 
 
 OU = IT 
 
