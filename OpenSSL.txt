@@ -1,1 +1,74 @@
+Resources:
+https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309 
 
+1. Create Certs with Root cert for web server.
+2. 
+
+
+1)
+
+Generate Private key: 
+openssl genrsa -des3 -out hostname.LAN.LOCAL.key 2048 
+
+Gen public key in the CSR: 
+openssl req -new -key hostname.LAN.LOCAL.key -config /MSCA/1/config.cnf -extensions v3_req -out hostname.LAN.LOCAL.csr  
+
+Generate public key: 
+openssl x509 -req -in hostname.LAN.LOCAL.csr -CA Me.LOCAL.Root-Cert-SigningCertificate.pem -CAkey LAN.LOCAL.root-key.pem -CAcreateserial -out hostname.LAN.LOCAL.crt -days 360 -sha256 -extfile /MSCA/1/config.cnf -extensions v3_req 
+
+You may need a -extfile dependant on OpenSSL Version
+
+It may be something like this:
+[req] 
+
+default_bits = 2048 
+
+encrypt_key = no 
+
+default_md = sha256 
+
+distinguished_name = req_distinguished_name 
+
+prompt = no 
+
+req_extensions = v3_req 
+
+  
+
+[req_distinguished_name] 
+
+C = US 
+
+ST = CA 
+
+L = Merced 
+
+O = MID 
+
+OU = IT 
+
+CN = myhost.local.lan 
+
+  
+
+[v3_req] 
+
+extendedKeyUsage = serverAuth, clientAuth 
+
+subjectAltName = @alt_names 
+
+  
+
+[alt_names] 
+
+DNS.1 = myhost1.local.lan 
+
+DNS.2 = myhost2.local.lan 
+
+IP.1 = 1.1.1.1 
+
+IP.2 = 2.2.2.2 
+__________________________________________________________________________________________________________EOF
+
+2)
+ 
