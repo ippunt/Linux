@@ -1,0 +1,6 @@
+https://access.redhat.com/sites/default/files/attachments/rh_ip_command_cheatsheet_1214_jcs_print.pdf
+https://tldp.org/HOWTO/BRIDGE-STP-HOWTO/set-up-the-bridge.html
+ip link can add and remove bridges and set their options. bridge displays and manipulates bridges on final distribution boards (FDBs), main distribution boards (MDBs), and virtual local area networks (VLANs).
+
+ip link add name br0 type bridge; Create bridge
+ip link set dev br0 up; up state
