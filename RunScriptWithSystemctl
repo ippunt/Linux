@@ -7,5 +7,6 @@ Description=Runs stars script which creates a file --> /home/jeff/starsplace
 Type=simple
 ExecStart=/bin/stars
 [Install]
+#WantedBy=multi-user.target  #the install option is optionsal
 WantedBy=graphical.target  #the install option is optionsal
 _____________________________________________________________________________________________
