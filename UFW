@@ -8,6 +8,7 @@ Secific IP
 Very specific 
 Deleting Rules 
 Files and behavior 
+Troubleshooting   iptables -nvL
 
 Test box:
 ufw enable
