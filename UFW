@@ -1,0 +1,104 @@
+Debian UFW Basics; UFW is a front-end to IPtables 
+Defaults file location and altering them 
+App profiles 
+IPv6 
+Configure 
+Port Ranges 
+Secific IP 
+Very specific 
+Deleting Rules 
+Files and behavior 
+
+Test box:
+ufw enable
+ufw deny to 192.168.0.0/16
+ufw deny 10 172.16.0.0/12
+ufw deny to 10.0.0.0/8
+ufw allow to IP_OF_DNS_Server
+ 
+
+ 
+
+ 
+
+1. UFW Basics 
+
+Ufw status; Tells you the status of the firewall.  
+Ufw status verbose; 
+Ufw enable; turns it on 
+Ufw disable; turns it off 
+ 
+2. Default file locations and altering them 
+
+Cat /etc/default/ufw 
+
+Sudo ufw default deny incoming 
+
+Sudo ufw default allow outgoing 
+
+ 
+
+When installing software with app it will add a profile. 
+
+Cat /etc/ufw/applications.d 
+
+Sudo ufw app list 
+
+Sudo ufw app info 'Apache'; gives you more information about the apps 
+
+ 
+
+IPv6 
+
+Echo "IPV6=yes" >> /etc/default/ufw; just example may have to change boolean I haven't looked to see if default is non-commented.  
+
+Configure 
+Ufw allow ssh; 
+Ufw allow 2222/tcp; 
+Ufw deny ssh/tcp 
+Ufw deny 2222/tcp; 
+
+Many different ways to allow access to Apache: 
+Ufw allow http; By service name 
+Ufw allow 80/tcp; by port and protocol 
+Ufw allow 'Apache'; by application profile 
+Many different ways for Apache Secure: 
+Ufw allow https; 
+Ufw alow 443/tcp; 
+Ufw allow 'Apache Secure'; 
+ 
+
+Port ranges 
+Ufw allow 4200:4300/tcp 
+Ufw allow 5200:5300/udp 
+
+Specific IP 
+Ufw allow from 1.1.1.1; 
+Ufw allow from 1.1.1.1 to any port 22;  
+Ufw allow from 1.1.1.1/24 to any port 22; 
+Ufw allow from 1.1.1.1 to 2.2.2.2 port 80; 
+ 
+
+Deletes 
+Ufw status numbered; 
+
+Ufw delete 3;  
+Delete all: 
+Ufw reset; 
+Ufw status; 
+
+10. Files and behavior 
+
+The UFW firewall can manage to do anything that iptables does. This can be done with different sets of rules files, which are nothing, but simple iptables-restore text files. 
+
+Tuning of UFW firewall or adding additional iptables commands are not permitted via ufw command, is a just matter of altering following text files 
+
+/etc/default/ufw: The main configuration file with pre-defined rules. 
+
+/etc/ufw/before[6].rules: In this file rules are calculated before adding via ufw command. 
+
+/etc/ufw/after[6].rules: In this file rules are calculated after adding via ufw command. 
+
+/etc/ufw/sysctl.conf: This file is used to tune kernel network. 
+
+/etc/ufw/ufw.conf: This file enable the ufw on boot. 
