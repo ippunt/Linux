@@ -20,6 +20,7 @@ ufw allow out to IP_OF_DNS_Server
  
 0.1 
 ufw status; the action will tell you if its out if its just deny its in.
+ufw status numbered; will tell you out or in additionally
 iptables -nvL; will let you see exactly what is happening and may be necessary. 
 ufw deny to 192.168.0.0/16 by default is an input chain whether you state to or from
 ufw deny out to 192.168.0.0/16  will block all connections initiated from the machine to this address. 
