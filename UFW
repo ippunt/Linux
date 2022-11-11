@@ -13,12 +13,13 @@ Troubleshooting   iptables -nvL
 
 Test box:
 ufw enable
-ufw deny to 192.168.0.0/16
-ufw deny to 172.16.0.0/12
-ufw deny to 10.0.0.0/8
-ufw allow to IP_OF_DNS_Server
+ufw deny out to 192.168.0.0/16
+ufw deny out to 172.16.0.0/12
+ufw deny out to 10.0.0.0/8
+ufw allow out to IP_OF_DNS_Server
  
 0.1 
+iptables -nvL; will let you see exactly what is happening and may be necessary. 
 ufw deny to 192.168.0.0/16 by default is an input chain whether you state to or from
 ufw deny out to 192.168.0.0/16  will block all connections initiated from the machine to this address. 
 
