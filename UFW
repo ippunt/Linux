@@ -1,3 +1,4 @@
+0.1 Don't let input and output chains challenge you again!
 Debian UFW Basics; UFW is a front-end to IPtables 
 Defaults file location and altering them 
 App profiles 
@@ -13,12 +14,13 @@ Troubleshooting   iptables -nvL
 Test box:
 ufw enable
 ufw deny to 192.168.0.0/16
-ufw deny 10 172.16.0.0/12
+ufw deny to 172.16.0.0/12
 ufw deny to 10.0.0.0/8
 ufw allow to IP_OF_DNS_Server
  
-
- 
+0.1 
+ufw deny to 192.168.0.0/16 by default is an input chain whether you state to or from
+ufw deny out to 192.168.0.0/16  will block all connections initiated from the machine to this address. 
 
  
 
