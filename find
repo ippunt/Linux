@@ -1,0 +1,6 @@
+1. Find all files on a system which has config within their name.
+
+
+
+1. find / -type f -name '*config*' 2>/dev/null 
+  type f is file only no directories, -name lets us query for name
