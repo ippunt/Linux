@@ -1,5 +1,6 @@
 1. How to NAT all traffic to a sink whole.
-2. All ICMP for a sinkwhole subnet.
+2. Multihosts
+3. ICMP
 Per iptables manual, there are currently 3 types of tables:
 
 FILTER – this is the default table, which contains the built in chains for:
@@ -75,3 +76,9 @@ in fedora20 service iptables save
 # iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 2223:65535 -j REDIRECT --to-port 2222
 
 2.
+iptables -A INPUT -s 192.168.1.5,192.168.2.6 -d 192.168.1.254 -j ACCEPT
+
+3.
+ICMP
+
+
