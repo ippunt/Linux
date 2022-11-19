@@ -1,3 +1,5 @@
+1. How to NAT all traffic to a sink whole.
+2. All ICMP for a sinkwhole subnet.
 Per iptables manual, there are currently 3 types of tables:
 
 FILTER – this is the default table, which contains the built in chains for:
@@ -64,3 +66,12 @@ in fedora20 service iptables save
 -D number Deletes a rule for a chain specified by additional arguments. Rules start at number 1.
 -R number Replaces a rule for a chain specified by additional arguments. Rules start at number 1.
 -F chain Removes all rules for a certain chain. If no chain is specified, it removes all rules for all chains.
+
+1.
+# iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 1:21 -j REDIRECT --to-port 2222
+# iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 23:79 -j REDIRECT --to-port 2222
+# iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 81:442 -j REDIRECT --to-port 2222
+# iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 444:2221 -j REDIRECT --to-port 2222
+# iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 2223:65535 -j REDIRECT --to-port 2222
+
+2.
