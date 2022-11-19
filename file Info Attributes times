@@ -1,3 +1,10 @@
+1. File attributes
+2. Times of file
+
+1.
 lsattr file1 # lists the file attribute
 chattr +i file1 # adds the immutable attribute to the file not even root can alter it until this is removed
 chattr -i file1 # removes the immutable attribute
+
+2.
+ls -l contents last written to disk | -lc time metadata last changed | ls -lu time of last access
