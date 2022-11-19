@@ -1,1 +1,4 @@
 inotifywait - can alert on file changes. 
+auditd - can do alerting on files/directories. Cannot behave on / , no wildcards, only additional switches supported with -w
+  apt isntall auditd; systemctl stop auditd; echo " " > /var/log/audit/audit.log; echo '-w /id_rsa -p rwa -k hostswrap' >> /var/log/audit/audit.log
+  -p permissions to trigger on, -k uniquely identify alerts, if choose directory all subdir and files present alerted on.
