@@ -3,7 +3,7 @@ T-Shoot: iptables -L -n -v
 2. Changing IP of destination
 3. Notes on MASQUERADE PAT
 4. ICMP
-5. Subnet
+5. Subnet and Multihost
 6. Persistance
 
 Per iptables manual, there are currently 3 types of tables:
@@ -87,11 +87,12 @@ iptables -t nat -A PREROUTING -p tcp --dport 3124 -j DNAT --to-destination 1.1.1
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE; This Would PAT all traffic routed to eth0
 
 4.
+No protocol will do all protocols so wouldn't have to specify ICMP. 
 ICMP
  iptables -A PREROUTING -t nat -d 192.168.3.0/24 -p icmp -j DNAT --to-destination 192.168.1.11
  iptables -A PREROUTING -t nat -d 192.168.4.1,192.168.4.2 
 
-5. POC Subnet
+5. POC Subnet and Multi
 PSUEDO: Destination addresses NAT 192.168.3.0/24 to 192.168.1.11
 iptables -A PREROUTING -t nat -d 192.168.3.0/24 -j DNAT --to-destination 192.168.1.11
 iptables -A PREROUTING -t nat -d 192.168.4.2,192.168.4.3 -j DNAT --to-destination 192.168.1.11; # I did this to prove they both work
