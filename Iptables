@@ -1,4 +1,5 @@
-T-Shoot: iptables -L -n -v
+T-Shoot: iptables -L -n -v; # Would show you forward input output but not the NAT. I believe only the filter table. 
+	 iptables -t nat -n -L; # If you need to see your NATS
 1. Nating all open servies on one host to a single service same IP
 2. Changing IP of destination
 3. Notes on MASQUERADE PAT
