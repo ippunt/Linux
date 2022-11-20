@@ -89,8 +89,11 @@ iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE; This Would PAT all traffic
 
 4.
 ICMP
+ iptables -A PREROUTING -t nat -d 192.168.3.0/24 -p icmp -j DNAT --to-destination 192.168.1.11
+
 
 5. POC Subnet
 PSUEDO: NAT 192.168.3.0/24 to 192.168.1.11
 iptables -A PREROUTING -t nat -d 192.168.3.0/24 -j DNAT --to-destination 192.168.1.11
+If traffic is originated from the box say from IP 192.168.1.11 it may not NAT atleast in my situation. 
 
