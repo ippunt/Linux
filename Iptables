@@ -1,7 +1,9 @@
+T-Shoot: iptables -L -n -v
 1. Nating all open servies on one host to a single service same IP
 2. Changing IP of destination
 3. Notes on MASQUERADE PAT
 4. ICMP
+5. Subnet
 
 2. Multihosts
 3. ICMP
@@ -88,4 +90,7 @@ iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE; This Would PAT all traffic
 4.
 ICMP
 
+5. POC Subnet
+PSUEDO: NAT 192.168.3.0/24 to 192.168.1.11
+iptables -A PREROUTING -t nat -d 192.168.3.0/24 -j DNAT --to-destination 192.168.1.11
 
