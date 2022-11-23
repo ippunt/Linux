@@ -1,10 +1,18 @@
 Resources:
 https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309 
-
+0.1 Joining with OpenSSL client to view data
 1. Create key and CSR for issuer to sign
 2. One liner key and certificate out. Key not encrypted
 3. Viewing and verifying certs
-10. Create Certs with Root cert for web server and server client auth Utilize config file for attributes names and IPs
+4. Command Reference
+5. PEM binding and some notes
+6. Create Certs with Root cert for web server and server client auth Utilize config file for attributes names and IPs
+7. Conversions
+8. Encrypt and Decrypt data with openssl
+
+0.1)
+openssl s_client -connect localhost:30001 
+
 
 1)
 openssl genrsa –aes192 out My_Private_key.key 4096
@@ -21,7 +29,41 @@ openssl req -in example-com.req.pem -text –noout; Verify CSR
 openssl req -text -noout -verify -in MY-CertificateSIgningRequest.csr; Verify CSR 
 openssl rsa –in mykeyfile.key -text –noout; Verify CA key 
 
-10)
+4)
+-req – PKCS Certificate request and certificate generation utility 
+-x509 - outputs a self-signed rather than a Certificate Request 
+-genrsa   - outputs a private key 
+-newkey arg – creates a new cert req and key. Takes rsa:nbits as args 
+-keyout – gives the filename for the private key to output to 
+-out – This specifies the output filename to write to or standard out by default 
+-days n – when –x509 is being used this creates the validity of the cert in days. The default is 30 
+-nodes when private key is created do not encrypt 
+-des3  encrypts the private key 
+-noout omits output of encoded version 
+-nocerts only output private key 
+-nokeys only output certificate.  
+-addext "extendedKeyUsage = serverAuth, clientAuth"; openssl version need be beyond 1.1.1 
+
+5)
+
+There are multiple formats used to create certificate bundles, depending on the format of the certificate. Using a privacy-enhanced mail (PEM) certificate to create bundles is popular due to the simple text format of those certificates. To create a PEM certificate bundle, it is enough to copy each certificate in the opposite issuing order in a text file, typically assigning a .pem extension. 
+
+ 
+
+To create a PEM certificate bundle, copy certificates in reverse order, omitting the final SSL certificate: 
+
+Root.crt is the root certificate 
+Intermediate1.crt is the intermediate certificate 1 
+Intermediate2.crt is the intermediate certificate 2 
+
+My_certificate.crt is the final requested SSL certificate 
+# Create a certificate bundle mychain.ca-bundle in Linux 
+cat Intermediate2.crt  Intermediate1.crt Root.crt > mychain.pem 
+# Create a certificate bundle mychain.ca-bundle in Windows 
+copy Intermediate2.crt +  Intermediate1.crt + Root.crt mychain.pem
+
+
+6)
 
 Generate Private key: 
 openssl genrsa -des3 -out hostname.LAN.LOCAL.key 2048 
@@ -87,4 +129,84 @@ IP.1 = 1.1.1.1
 IP.2 = 2.2.2.2 
 __________________________________________________________________________________________________________EOF
 
+ 
+7)
+Convert x509 to PEM 
+ 
+
+openssl x509 -in certificatename.cer -outform PEM -out certificatename.pem 
+
+ 
+ 
+Convert PEM to DER 
+
+openssl x509 -outform der -in certificatename.pem -out certificatename.der 
+
+ 
+ 
+Convert DER to PEM 
+
+openssl x509 -inform der -in certificatename.der -out certificatename.pem 
+
+ 
+ 
+Convert PEM to P7B 
+
+Note: The PKCS#7 or P7B format is stored in Base64 ASCII format and has a file extension of .p7b or .p7c. 
+A P7B file only contains certificates and chain certificates (Intermediate CAs), not the private key. The most common platforms that support P7B files are Microsoft Windows and Java Tomcat. 
+
+openssl crl2pkcs7 -nocrl -certfile certificatename.pem -out certificatename.p7b -certfile CACert.cer 
+
+ 
+ 
+Convert PKCS7 to PEM 
+
+openssl pkcs7 -print_certs -in certificatename.p7b -out certificatename.pem 
+
+ 
+ 
+Convert pfx to PEM 
+
+Note: The PKCS#12 or PFX format is a binary format for storing the server certificate, intermediate certificates, and the private key in one encryptable file. PFX files usually have extensions such as .pfx and .p12. PFX files are typically used on Windows machines to import and export certificates and private keys. 
+
+openssl pkcs12 -in certificatename.pfx -out certificatename.pem 
+
+ 
+ 
+Convert PFX to PKCS#8 
+Note: This requires 2 commands 
+ 
+STEP 1: Convert PFX to PEM 
+
+openssl pkcs12 -in certificatename.pfx -nocerts -nodes -out certificatename.pem 
+
+ 
+ 
+STEP 2: Convert PEM to PKCS8 
+
+openSSL pkcs8 -in certificatename.pem -topk8 -nocrypt -out certificatename.pk8 
+
+ 
+ 
+Convert P7B to PFX 
+Note: This requires 2 commands 
+ 
+STEP 1: Convert P7B to CER 
+
+openssl pkcs7 -print_certs -in certificatename.p7b -out certificatename.cer 
+
+ 
+ 
+STEP 2: Convert CER and Private Key to PFX 
+
+openssl pkcs12 -export -in certificatename.cer -inkey privateKey.key -out certificatename.pfx -certfile  cacert.cer 
+
+8)
+openssl genrsa -out private.pem 1024; private key
+openssl rsa -in private.pem -pubout -out public.pem
+openssl rsa -in private.pem -out public.pem -outform PEM -pubout;# Just has some more specifities. 
+
+echo 'too many secrets' > file.txt
+openssl rsautl -encrypt -inkey public.pem -pubin -in file.txt -out file.ssl
+openssl rsautl -decrypt -inkey private.pem -in file.ssl -out decrypted.txt
  
