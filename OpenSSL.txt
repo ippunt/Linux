@@ -1,11 +1,27 @@
 Resources:
 https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309 
 
-1. Create Certs with Root cert for web server.
-2. 
-
+1. Create key and CSR for issuer to sign
+2. One liner key and certificate out. Key not encrypted
+3. Viewing and verifying certs
+10. Create Certs with Root cert for web server and server client auth Utilize config file for attributes names and IPs
 
 1)
+openssl genrsa –aes192 out My_Private_key.key 4096
+openssl req –new –key My_Private_key.key -out My_CSR.csr
+
+2)
+openssl req -x509 -newkey –nodes rsa:4096 -keyout key.pem -out cert.pem -days 360
+You wouldn't want it encrypted if application has to access it. 
+
+3)
+openssl x509 -in example-com.cert.pem -text –noout; Verify Certificate 
+openssl x509 -in example-com.cert.crt -text –noout; Verify Certificate 
+openssl req -in example-com.req.pem -text –noout; Verify CSR 
+openssl req -text -noout -verify -in MY-CertificateSIgningRequest.csr; Verify CSR 
+openssl rsa –in mykeyfile.key -text –noout; Verify CA key 
+
+10)
 
 Generate Private key: 
 openssl genrsa -des3 -out hostname.LAN.LOCAL.key 2048 
@@ -71,5 +87,4 @@ IP.1 = 1.1.1.1
 IP.2 = 2.2.2.2 
 __________________________________________________________________________________________________________EOF
 
-2)
  
