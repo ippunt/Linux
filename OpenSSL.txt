@@ -1,6 +1,7 @@
 Resources:
 https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309 
 0.1 Joining with OpenSSL client to view data
+0.2) Validating key and cert belong to each other
 1. Create key and CSR for issuer to sign
 2. One liner key and certificate out. Key not encrypted
 3. Viewing and verifying certs
@@ -9,10 +10,21 @@ https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309
 6. Create Certs with Root cert for web server and server client auth Utilize config file for attributes names and IPs
 7. Conversions
 8. Encrypt and Decrypt data with openssl
+9. Good docs on file usage
+10. Encrypt and salt password
+11. Encrypt your private key
+12. Create an intermediate Certifier
+13. Create PKS12
+
+
 
 0.1)
 openssl s_client -connect localhost:30001 
 
+0.2)
+Keys and certificates have the same exact modulus. 
+openssl x509 -noout -modulus -in cs_cert.crt | openssl md5
+openssl rsa -noout -modulus -in cs_privkey.txt | openssl md5 
 
 1)
 openssl genrsa –aes192 out My_Private_key.key 4096
@@ -210,3 +222,37 @@ echo 'too many secrets' > file.txt
 openssl rsautl -encrypt -inkey public.pem -pubin -in file.txt -out file.ssl
 openssl rsautl -decrypt -inkey private.pem -in file.ssl -out decrypted.txt
  
+ 9)
+ https://www.openssl.org/docs/man1.1.1/man5/x509v3_config.html 
+https://pki-tutorial.readthedocs.io/en/latest/expert/client.conf.html 
+
+
+10)
+# openssl passwd -6 -salt BHISWASHERE Fall2021! 
+$6$BHISWASHERE$M.ngiEju5sTwrsxbs3gRK/Ok.mp948HNn5x1PrB6UK3q/3acozGjEQtVSRZ4KUBmU02iI.TdJGhqNBj4ttbzI1  
+
+11)
+openssl rsa -aes256 -in your.key -out your.encrypted.key 
+
+12) Create an intermediate Certifier
+
+You only get one option with extensions, so when you use-> -extensions v3_intermediate_ca; for your intermediate CA servers.  
+
+ 
+
+[ v3_ca ] 
+subjectKeyIdentifier=hash 
+authorityKeyIdentifier=keyid:always,issuer 
+basicConstraints = critical,CA:true 
+
+[ v3_intermediate_ca ] 
+subjectKeyIdentifier = hash 
+authorityKeyIdentifier = keyid:always,issuer 
+basicConstraints = critical, CA:true, pathlen:0 
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign 
+
+13)pkcs12
+
+openssl pkcs12 -export -out MITM.pfx -inkey privateKey.key -in certificate.crt -certfile Root-CA.pem 
+https://www.ssl.com/how-to/create-a-pfx-p12-certificate-file-using-openssl/ 
+If the pkcs12 is to package for an appliance you will likely need to include Cert, Key, Root Certificate and you are creating the pfx.  
