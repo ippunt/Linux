@@ -1,14 +1,14 @@
 0.1 Don't let input and output chains challenge you again!
-Debian UFW Basics; UFW is a front-end to IPtables 
-Defaults file location and altering them 
-App profiles 
-IPv6 
-Configure 
-Port Ranges 
-Secific IP 
-Very specific 
-Deleting Rules 
-Files and behavior 
+1. Debian UFW Basics; UFW is a front-end to IPtables 
+2. Defaults file location and altering them 
+3. App profiles 
+4. IPv6 
+5. Configure 
+6. Port Ranges 
+7. Secific IP 
+8. Very specific 
+9. Deleting Rules 
+10. Files and behavior 
 Troubleshooting   iptables -nvL
 
 Test box:
