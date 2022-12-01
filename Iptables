@@ -6,6 +6,7 @@ T-Shoot: iptables -L -n -v; # Would show you forward input output but not the NA
 4. ICMP
 5. Subnet and Multihost
 6. Persistance
+7. Dropping RST harder than assumed
 
 Per iptables manual, there are currently 3 types of tables:
 
@@ -106,3 +107,5 @@ Scaled: 192.168.3.0/24 to 192.168.1.11 and then all services 1:65535 to port 222
 Apt install iptables-persistant
 ls /etc/iptables
 
+7.
+https://stackoverflow.com/questions/13215135/how-to-make-all-outgoing-rst-drop
