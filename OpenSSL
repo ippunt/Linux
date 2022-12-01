@@ -25,6 +25,7 @@ openssl s_client -connect localhost:30001
 Keys and certificates have the same exact modulus. 
 openssl x509 -noout -modulus -in cs_cert.crt | openssl md5
 openssl rsa -noout -modulus -in cs_privkey.txt | openssl md5 
+openssl req -noout -modulus -in cs_privkey.txt | openssl md5 
 
 1)
 openssl genrsa –aes192 out My_Private_key.key 4096
