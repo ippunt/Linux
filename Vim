@@ -25,3 +25,4 @@ dd	This command is used for deleting the whole line.
 yy	This command is used to yank any line (yanking means copying).
 cap	This command is used for changing a paragraph.
 cc	This command is used for changing a line.
+/word ?word n N   forward and backward searching
