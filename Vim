@@ -15,7 +15,7 @@ ctrl + b	This command is used for moving up a page.
 7j	This command is used for moving seven lines down.
 dw	This command is used for deleting a word.
 d6w	This command is used for deleting six words.
-gg	This command is used for moving to the top of the document.
+gg	This command is used for moving to the top of the document.                       prepend and go to that line
 G	This command is used for moving to the bottom of the document.                      prepend a number and go to that line
 .	This command is used for repeating the last command.
 di]	This command is used for deleting everything inside []
