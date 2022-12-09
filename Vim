@@ -4,3 +4,24 @@ u          undo
 ctrl-R     Redo what was undone
 :240,245 w newfilename      creates a file from what is on those lines
 #above could be used with history to write a script from commands your already using for a little automation
+
+
+
+
+hjkl	This command is used for moving the cursor left, right, up, and down respectively.
+w	This command is used for moving a word forward.
+ctrl + f	This command is used for moving down a page.
+ctrl + b	This command is used for moving up a page.
+7j	This command is used for moving seven lines down.
+dw	This command is used for deleting a word.
+d6w	This command is used for deleting six words.
+gg	This command is used for moving to the top of the document.
+G	This command is used for moving to the bottom of the document.
+.	This command is used for repeating the last command.
+di]	This command is used for deleting everything inside []
+4dd	This command is used for deleting four lines.
+dt>	This command is used for deleting till >
+dd	This command is used for deleting the whole line.
+yy	This command is used to yank any line (yanking means copying).
+cap	This command is used for changing a paragraph.
+cc	This command is used for changing a line.
