@@ -28,7 +28,7 @@ openssl rsa -noout -modulus -in cs_privkey.txt | openssl md5
 openssl req -noout -modulus -in cs_privkey.txt | openssl md5 
 
 1)
-openssl genrsa –aes192 out My_Private_key.key 4096
+openssl genrsa –aes192 -out My_Private_key.key 4096
 openssl req –new –key My_Private_key.key -out My_CSR.csr
 
 2)
