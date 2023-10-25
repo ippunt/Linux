@@ -1,6 +1,6 @@
 Resources:
 https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309 
-0.1 Joining with OpenSSL client to view data
+0.1 Joining with OpenSSL client to view data, or verify certs
 0.2) Validating key and cert belong to each other
 1. Create key and CSR for issuer to sign
 2. One liner key and certificate out. Key not encrypted
@@ -20,7 +20,7 @@ https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309
 
 0.1)
 openssl s_client -connect localhost:30001 
-
+openssl s_client -showcerts -connect mysub.mydomain.it:443
 0.2)
 Keys and certificates have the same exact modulus. 
 openssl x509 -noout -modulus -in cs_cert.crt | openssl md5
