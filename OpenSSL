@@ -42,6 +42,8 @@ openssl req -in example-com.req.pem -text –noout; Verify CSR
 openssl req -text -noout -verify -in MY-CertificateSIgningRequest.csr; Verify CSR 
 openssl rsa –in mykeyfile.key -text –noout; Verify CA key 
 
+How would you knoow if two match each other without documentation? Modulus will be matching. 
+
 4)
 -req – PKCS Certificate request and certificate generation utility 
 -x509 - outputs a self-signed rather than a Certificate Request 
